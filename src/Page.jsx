@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Coin from "./components/Coin";
+import { Autocomplete, TextField } from '@mui/material';
 
 function Page() {
 
     const [coins, setCoins] = useState([]);
-
+    const [search, setSearch] = useState("");
     useEffect(() => {
         axios
             .get(
@@ -19,12 +20,31 @@ function Page() {
             });
     }, []);
 
-    console.log(coins)
+    /* console.log(coins) */
+
+    const changeHandler = value => {
+        setSearch(value);
+        console.log(value)
+    };
+
+    const filteredCoins = coins.filter((coin) =>
+        coin.name.toLowerCase().includes(search.toLowerCase())
+    );
 
     return (
         <div className="tracker_app">
             <h1>Coin Tracker</h1>
-            {coins.map((coin) => {
+            <Autocomplete
+                id="outlined-basic"
+                options={coins.map(coin => coin.name)}
+                
+                renderInput={(params) =>
+                    <TextField 
+                        onChange={e=>changeHandler(e.target.value)} 
+                        {...params} label="coin name" />
+                }
+            />
+            {filteredCoins.map((coin) => {
                 return (
                     <Coin
                         key={coin.id}
