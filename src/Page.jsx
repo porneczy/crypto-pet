@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Coin from "./components/Coin";
 
 function Page() {
 
     const [coins, setCoins] = useState([]);
-    
+
     useEffect(() => {
         axios
             .get(
@@ -23,6 +24,22 @@ function Page() {
     return (
         <div className="tracker_app">
             <h1>Coin Tracker</h1>
+            {coins.map((coin) => {
+                return (
+                    <Coin
+                        key={coin.id}
+                        name={coin.name}
+                        image={coin.image}
+                        symbol={coin.symbol}
+                        currentPrice={coin.current_price}
+                        change24h={coin.price_change_percentage_24h}
+                        rank={coin.market_cap_rank}
+                        marketCap={coin.market_cap}
+                    />
+                )
+
+            })}
+
         </div>
     )
 }
