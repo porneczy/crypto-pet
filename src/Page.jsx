@@ -7,6 +7,11 @@ function Page() {
 
     const [coins, setCoins] = useState([]);
     const [search, setSearch] = useState("");
+    const [value, setValue] = useState("");
+
+    const [coin, setCoin] = useState(coins[0]);
+    console.log(coin)
+
     useEffect(() => {
         axios
             .get(
@@ -28,8 +33,9 @@ function Page() {
     };
 
     const filteredCoins = coins.filter((coin) =>
-        coin.name.toLowerCase().includes(search.toLowerCase())
+        coin.name.toLowerCase().includes(typeof search === 'string' ? search.toLowerCase() : '')
     );
+
 
     return (
         <div className="tracker_app">
@@ -37,10 +43,12 @@ function Page() {
             <Autocomplete
                 id="outlined-basic"
                 options={coins.map(coin => coin.name)}
-                
+                value={value}
+                onChange={(event, value) => changeHandler(value)}
+                isOptionEqualToValue={(option, value) => option.value === value.value}
                 renderInput={(params) =>
-                    <TextField 
-                        onChange={e=>changeHandler(e.target.value)} 
+                    <TextField
+                        onChange={e => changeHandler(e.target.value)}
                         {...params} label="coin name" />
                 }
             />

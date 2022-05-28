@@ -1,0 +1,7 @@
+felhasznált anyagok:
+
+https://www.coingecko.com/en/api/documentation
+
+https://axios-http.com/docs/intro
+
+https://mui.com/
