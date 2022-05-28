@@ -5,3 +5,7 @@ https://www.coingecko.com/en/api/documentation
 https://axios-http.com/docs/intro
 
 https://mui.com/
+
+
+autocxomplete problema: 
+https://bobbyhadz.com/blog/javascript-cannot-read-property-tolowercase-of-null

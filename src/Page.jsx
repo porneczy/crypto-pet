@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Coin from "./components/Coin";
-import { Autocomplete, TextField } from '@mui/material';
+import { Autocomplete, TextField, Button } from '@mui/material';
 
 function Page() {
 
     const [coins, setCoins] = useState([]);
     const [search, setSearch] = useState("");
     const [value, setValue] = useState("");
+    const [sort, setSort] = useState("desc");
 
     const [coin, setCoin] = useState(coins[0]);
-    console.log(coin)
+    
 
     useEffect(() => {
         axios
@@ -25,16 +26,24 @@ function Page() {
             });
     }, []);
 
-    /* console.log(coins) */
+    
 
     const changeHandler = value => {
-        setSearch(value);
-        console.log(value)
+        setSearch(value)
     };
 
     const filteredCoins = coins.filter((coin) =>
         coin.name.toLowerCase().includes(typeof search === 'string' ? search.toLowerCase() : '')
     );
+
+    function sortCoinsByMarcetCap() {
+        setCoins([...coins.sort((a, b) => sort === "desc" ? b.market_cap - a.market_cap : a.market_cap - b.market_cap)])
+        setSort(sort === "desc" ? "asc" : "desc")
+    }
+    function sortCoinsBy24hChange() {
+        setCoins([...coins.sort((a, b) => sort === "desc" ? b.price_change_percentage_24h - a.price_change_percentage_24h : a.price_change_percentage_24h - b.price_change_percentage_24h)])
+        setSort(sort === "desc" ? "asc" : "desc")
+    }
 
 
     return (
@@ -52,6 +61,8 @@ function Page() {
                         {...params} label="coin name" />
                 }
             />
+            <Button variant="contained" onClick={sortCoinsByMarcetCap}>sort by marcet cap</Button>
+            <Button variant="contained" onClick={sortCoinsBy24hChange}>sort by 24h change</Button>
             {filteredCoins.map((coin) => {
                 return (
                     <Coin

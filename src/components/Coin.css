@@ -1,0 +1,49 @@
+.coinContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.coinRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    width: 1000px;
+    height: 100px;
+}
+
+.coinColumnGroupName{
+    display: flex;
+    align-items: center;
+    min-width: 250px;
+}
+
+.coinColumnGroupData{
+    display: flex;
+    text-align: center;
+    justify-content: space-around;
+    width: 100%;
+}
+
+
+.rank{
+    width: 60px;
+}
+h2{
+    width: 300px;
+}
+.price{
+    width: 180px;
+}
+
+
+.symbol{
+    text-transform: uppercase;
+}
+
+img {
+    height: 35px;
+    width: 35px;
+    margin-right: 15px;
+}
+

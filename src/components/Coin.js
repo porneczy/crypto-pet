@@ -1,6 +1,5 @@
 import React from 'react';
-
-
+import "./Coin.css"
 function Coin({
     name,
     image,
@@ -12,17 +11,23 @@ function Coin({
 }) {
     return (
         <div className='coinContainer'>
-            <p className="rank">{rank}</p>
-            <img src={image} alt="coin" />
-            <h1>{name}</h1>
-            <p className="symbol">{symbol}</p>
-            <p className="price">{currentPrice} $</p>
-            <p className="percent">
-                {change24h}%
-            </p>
-            <p className="marketcap">
-                Market Cap: {marketCap.toLocaleString()} $
-            </p>
+            <div className='coinRow'>
+                <p className="rank">{rank}</p>
+                <div className='coinColumnGroupName'>
+                    <img src={image} alt="coin" />
+                    <h2>{name}</h2>
+                    <p className="symbol">{symbol}</p>
+                </div>
+                <div className='coinColumnGroupData'>
+                    <p className="price">{currentPrice} $</p>
+                    <p className="percent">
+                        {change24h}%
+                    </p>
+                    <p className="marketcap">
+                        Market Cap: {marketCap.toLocaleString()} $
+                    </p>
+                </div>
+            </div>
         </div>
     )
 }
