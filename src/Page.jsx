@@ -2,6 +2,13 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Coin from "./components/Coin";
 import { Autocomplete, TextField, Button } from '@mui/material';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import TableCell from '@mui/material/TableCell';
+import Paper from '@mui/material/Paper';
 
 function Page() {
 
@@ -10,8 +17,7 @@ function Page() {
     const [value, setValue] = useState("");
     const [sort, setSort] = useState("desc");
 
-    const [coin, setCoin] = useState(coins[0]);
-    
+
 
     useEffect(() => {
         axios
@@ -26,7 +32,7 @@ function Page() {
             });
     }, []);
 
-    
+
 
     const changeHandler = value => {
         setSearch(value)
@@ -63,21 +69,43 @@ function Page() {
             />
             <Button variant="contained" onClick={sortCoinsByMarcetCap}>sort by marcet cap</Button>
             <Button variant="contained" onClick={sortCoinsBy24hChange}>sort by 24h change</Button>
-            {filteredCoins.map((coin) => {
-                return (
-                    <Coin
-                        key={coin.id}
-                        name={coin.name}
-                        image={coin.image}
-                        symbol={coin.symbol}
-                        currentPrice={coin.current_price}
-                        change24h={coin.price_change_percentage_24h}
-                        rank={coin.market_cap_rank}
-                        marketCap={coin.market_cap}
-                    />
-                )
 
-            })}
+            <TableContainer component={Paper}>
+                <Table aria-label="collapsible table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell />
+                            <TableCell>Rank</TableCell>
+                            <TableCell align="right">Logo</TableCell>
+                            <TableCell align="right">Name</TableCell>
+                            <TableCell align="right">Symbol</TableCell>
+                            <TableCell align="right">Current Price</TableCell>
+                            <TableCell align="right">Change 24h</TableCell>
+                            <TableCell align="right">Market Cap</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {filteredCoins.map((coin) => {
+                            return (
+                                <Coin
+                                    key={coin.id}
+                                    name={coin.name}
+                                    image={coin.image}
+                                    symbol={coin.symbol}
+                                    currentPrice={coin.current_price}
+                                    change24h={coin.price_change_percentage_24h}
+                                    rank={coin.market_cap_rank}
+                                    marketCap={coin.market_cap}
+                                />
+                            )
+                        })}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+
+
+
+
 
         </div>
     )

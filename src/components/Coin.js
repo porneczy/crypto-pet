@@ -1,5 +1,11 @@
-import React from 'react';
-import "./Coin.css"
+import React, { useState } from 'react';
+import "./Coin.css";
+import TableRow from '@mui/material/TableRow';
+import TableCell from '@mui/material/TableCell';
+import IconButton from '@mui/material/IconButton';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+
 function Coin({
     name,
     image,
@@ -9,26 +15,30 @@ function Coin({
     rank,
     marketCap
 }) {
+    const [open, setOpen] = useState(false);
     return (
-        <div className='coinContainer'>
-            <div className='coinRow'>
-                <p className="rank">{rank}</p>
-                <div className='coinColumnGroupName'>
-                    <img src={image} alt="coin" />
-                    <h2>{name}</h2>
-                    <p className="symbol">{symbol}</p>
-                </div>
-                <div className='coinColumnGroupData'>
-                    <p className="price">{currentPrice} $</p>
-                    <p className="percent">
-                        {change24h}%
-                    </p>
-                    <p className="marketcap">
-                        Market Cap: {marketCap.toLocaleString()} $
-                    </p>
-                </div>
-            </div>
-        </div>
+            <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+                <TableCell>
+                    <IconButton
+                        aria-label="expand row"
+                        size="small"
+                        onClick={() => setOpen(!open)}
+                    >
+                        {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                    </IconButton>
+                </TableCell>
+
+                <TableCell component="th" scope="row">
+                    {rank}
+                </TableCell>
+                <TableCell align="right"><img src={image} alt="coin" /></TableCell>
+                <TableCell align="right"><b>{name}</b></TableCell>
+                <TableCell align="right"><p className="symbol">{symbol}</p></TableCell>
+                <TableCell align="right">{currentPrice}</TableCell>
+                <TableCell align="right">{change24h}</TableCell>
+                <TableCell align="right">{marketCap.toLocaleString()}</TableCell>
+                
+            </TableRow>
     )
 }
 
