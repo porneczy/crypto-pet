@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import "./Coin.css";
-import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell';
-import IconButton from '@mui/material/IconButton';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import {TableRow, TableCell, IconButton} from '@mui/material';
 
 function Coin({
     name,

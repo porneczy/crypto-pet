@@ -1,29 +1,19 @@
 import React, { useEffect, useState } from "react";
+
 import axios from "axios";
+
 import Coin from "./components/Coin";
-import { Autocomplete, TextField, Button, AppBar, Toolbar, Typography, IconButton, Drawer, Divider } from '@mui/material';
-import { styled, useTheme  } from '@mui/material/styles';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import MenuIcon from '@mui/icons-material/Menu';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell';
-import Paper from '@mui/material/Paper';
+import AppBarComp from "./components/AppBarComp";
+import DrawerComp from "./components/DrawerComp";
+
+import { Table, TableBody, TableContainer, TableHead, TableRow, TableCell, Paper} from "@mui/material";
+
 
 function Page() {
-    const theme = useTheme();
 
     const [coins, setCoins] = useState([]);
-    const [search, setSearch] = useState("");
-    const [value, setValue] = useState("");
-    const [sort, setSort] = useState("desc");
     const [open, setOpen] = useState(false);
-
-
+    const [search, setSearch] = useState("");
 
     useEffect(() => {
         axios
@@ -38,131 +28,17 @@ function Page() {
             });
     }, []);
 
-
-
-    const changeHandler = value => {
-        setSearch(value)
-    };
-
     const filteredCoins = coins.filter((coin) =>
         coin.name.toLowerCase().includes(typeof search === 'string' ? search.toLowerCase() : '')
     );
 
 
-
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
-
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
-
-    const DrawerHeader = styled('div')(({ theme }) => ({
-        display: 'flex',
-        alignItems: 'center',
-        padding: theme.spacing(0, 1),
-        // necessary for content to be below app bar
-        ...theme.mixins.toolbar,
-        justifyContent: 'flex-start',
-    }));
-
-    function sortCoinsByMarcetCap() {
-        setCoins([...coins.sort((a, b) => sort === "desc" ? b.market_cap - a.market_cap : a.market_cap - b.market_cap)])
-        setSort(sort === "desc" ? "asc" : "desc")
-    }
-    function sortCoinsBy24hChange() {
-        setCoins([...coins.sort((a, b) => sort === "desc" ? b.price_change_percentage_24h - a.price_change_percentage_24h : a.price_change_percentage_24h - b.price_change_percentage_24h)])
-        setSort(sort === "desc" ? "asc" : "desc")
-    }
-    function sortCoinsByCurrentPrice() {
-        setCoins([...coins.sort((a, b) => sort === "desc" ? b.current_price - a.current_price : a.current_price - b.current_price)])
-        setSort(sort === "desc" ? "asc" : "desc")
-    }
-
-
     return (
         <div className="tracker_app">
-            <AppBar position="fixed" open={open}>
-                <Toolbar>
-                    <Typography variant="h6" noWrap sx={{ flexGrow: 1 }} component="div">
-                        Coin Tracker
-                    </Typography>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        edge="end"
-                        onClick={handleDrawerOpen}
-                        sx={{ ...(open && { display: 'none' }) }}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                </Toolbar>
-            </AppBar>
 
+            <AppBarComp setOpen={setOpen} />
 
-
-            <Drawer
-                sx={{
-                    width: 400,
-                    flexShrink: 0,
-                    '& .MuiDrawer-paper': {
-                        width: 400,
-                    },
-                }}
-                variant="persistent"
-                anchor="right"
-                open={open}
-            >
-                <DrawerHeader>
-                    <IconButton onClick={handleDrawerClose}>
-                        {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-                    </IconButton>
-                </DrawerHeader>
-
-                <Autocomplete
-                    sx={{ maxWidth: 400 }}
-                    id="outlined-basic"
-                    options={coins.map(coin => coin.name)}
-                    value={value}
-                    onChange={(event, value) => changeHandler(value)}
-                    isOptionEqualToValue={(option, value) => option.value === value.value}
-                    renderInput={(params) =>
-                        <TextField
-                            onChange={e => changeHandler(e.target.value)}
-                            {...params} label="coin name" />
-                    }
-                />
-                <Divider />
-                <Button 
-                    variant="contained"
-                    onClick={sortCoinsByMarcetCap}
-                    sx={{maxWidth: 250, margin: 5}}
-                >
-                    sort by marcet cap
-                </Button>
-                <Divider />
-                <Button 
-                    variant="contained" 
-                    onClick={sortCoinsBy24hChange}
-                    sx={{maxWidth: 250, margin: 5}}
-                >
-                    sort by 24h change
-                </Button>
-                <Divider />
-                <Button 
-                    variant="contained" 
-                    onClick={sortCoinsByCurrentPrice}
-                    sx={{maxWidth: 250, margin: 5}}
-                >
-                    sort by Current Price
-                </Button>
-            </Drawer>
-
-
-
-
-
+            <DrawerComp open={open} setOpen={setOpen} setSearch={setSearch} coins={coins} setCoins={setCoins} />
 
             <TableContainer component={Paper} sx={{
                 display: "flex",
@@ -201,10 +77,6 @@ function Page() {
                     </TableBody>
                 </Table>
             </TableContainer>
-
-
-
-
 
         </div>
     )
