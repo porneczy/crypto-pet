@@ -48,3 +48,14 @@ h2{
 img {
     height: 35px;
 }
+.name{
+    margin-left: 20px;
+}
+
+.red {
+    color: #f00606;
+  }
+  
+  .green {
+    color: #11d811;
+  }

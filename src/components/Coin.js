@@ -17,28 +17,35 @@ function Coin({
 }) {
     const [open, setOpen] = useState(false);
     return (
-            <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-                <TableCell>
-                    <IconButton
-                        aria-label="expand row"
-                        size="small"
-                        onClick={() => setOpen(!open)}
-                    >
-                        {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                    </IconButton>
-                </TableCell>
+        <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+            <TableCell>
+                <IconButton
+                    aria-label="expand row"
+                    size="small"
+                    onClick={() => setOpen(!open)}
+                >
+                    {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                </IconButton>
+            </TableCell>
 
-                <TableCell component="th" scope="row">
-                    {rank}
-                </TableCell>
-                <TableCell align="right"><img src={image} alt="coin" /></TableCell>
-                <TableCell align="right"><b>{name}</b></TableCell>
-                <TableCell align="right"><p className="symbol">{symbol}</p></TableCell>
-                <TableCell align="right">{currentPrice}</TableCell>
-                <TableCell align="right">{change24h}</TableCell>
-                <TableCell align="right">{marketCap.toLocaleString()}</TableCell>
-                
-            </TableRow>
+            <TableCell component="th" scope="row">
+                {rank}
+            </TableCell>
+            <TableCell >
+                <img src={image} alt="coin" />
+                <b className='name'>{name}</b>
+            </TableCell>
+            <TableCell ><p className="symbol">{symbol}</p></TableCell>
+            <TableCell >{currentPrice} $</TableCell>
+            <TableCell >
+                <p className={`${change24h < 0 ? "red" : "green"}`}>
+                    {change24h.toFixed(2)}%
+                </p>
+            </TableCell>
+
+            <TableCell >{marketCap.toLocaleString()} $</TableCell>
+
+        </TableRow>
     )
 }
 
