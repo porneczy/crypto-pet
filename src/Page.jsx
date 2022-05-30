@@ -32,7 +32,7 @@ function Page() {
         coin.name.toLowerCase().includes(typeof search === 'string' ? search.toLowerCase() : '')
     );
 
-
+    console.log(coins)
     return (
         <div className="tracker_app">
 
@@ -71,6 +71,7 @@ function Page() {
                                     change24h={coin.price_change_percentage_24h}
                                     rank={coin.market_cap_rank}
                                     marketCap={coin.market_cap}
+                                    id={coin.id}
                                 />
                             )
                         })}
