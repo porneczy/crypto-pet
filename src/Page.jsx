@@ -3,6 +3,7 @@ import axios from "axios";
 import Coin from "./components/Coin";
 import AppBarComp from "./components/AppBarComp";
 import DrawerComp from "./components/DrawerComp";
+
 import {
     Table,
     TableBody,
@@ -11,6 +12,7 @@ import {
     TableRow,
     TableCell,
     Paper,
+    Box,
 } from "@mui/material";
 
 function Page() {
@@ -70,21 +72,28 @@ function Page() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {filteredCoins.map((coin) => {
-                            return (
-                                <Coin
-                                    key={coin.id}
-                                    name={coin.name}
-                                    image={coin.image}
-                                    symbol={coin.symbol}
-                                    currentPrice={coin.current_price}
-                                    change24h={coin.price_change_percentage_24h}
-                                    rank={coin.market_cap_rank}
-                                    marketCap={coin.market_cap}
-                                    id={coin.id}
-                                />
-                            );
-                        })}
+
+                        {
+                            filteredCoins.length ?
+                                filteredCoins.map((coin) => {
+                                    return (
+                                        <Coin
+                                            key={coin.id}
+                                            name={coin.name}
+                                            image={coin.image}
+                                            symbol={coin.symbol}
+                                            currentPrice={coin.current_price}
+                                            change24h={coin.price_change_percentage_24h}
+                                            rank={coin.market_cap_rank}
+                                            marketCap={coin.market_cap}
+                                            id={coin.id}
+                                        />
+                                    );
+                                })
+                                :
+                                <img className="noResult" src="https://i.pinimg.com/originals/6f/95/d2/6f95d238b4251ac47ed830cea546aaf5.png" alt="no-results" />
+                        }
+
                     </TableBody>
                 </Table>
             </TableContainer>
