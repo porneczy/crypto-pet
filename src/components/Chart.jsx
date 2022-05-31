@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Plotly from "plotly.js-dist-min";
 
 // https://itnext.io/how-to-make-a-basic-cryptocurrency-chart-app-with-near-real-time-updating-by-using-react-hooks-6a466529c2dc
@@ -7,53 +8,35 @@ function Chart({ id }) {
     const [isLoading, setIsLoading] = useState(true);
     const [latestPrice, setLatestPrice] = useState(0);
 
-    const callAPI = async (url) => {
-        let response = await fetch(url, {
-            headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-            },
-        });
-        if (!response.ok) {
-            const message = `An error has occured: ${response.status}`;
-            throw new Error(message);
-        }
-        return response.json();
-    };
-
     useEffect(() => {
-        fetchData().then((chartData) => {
-            setIsLoading(false);
-            initChart(chartData);
-            setLatestPrice(
-                parseFloat(chartData.price[chartData.price.length - 1]).toFixed(2)
-            );
-        });
-        const timerID = setInterval(() => {
-            fetchData().then((chartData) => {
-                updateChart(chartData);
+        axios
+            .get(
+                `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=1&interval=1m`
+            )
+            .then((response) => {
+                let dataa = { index: [], price: [], volumes: [] };
+
+
+                for (const item of response.data.prices) {
+                    dataa.index.push(item[0]);
+                    dataa.price.push(item[1]);
+                }
+                for (const item of response.data.total_volumes) dataa.volumes.push(item[1]);
+
+
+
+                setIsLoading(false);
+                initChart(dataa);
                 setLatestPrice(
-                    parseFloat(chartData.price[chartData.price.length - 1]).toFixed(2)
+                    parseFloat(dataa.price[dataa.price.length - 1]).toFixed(2)
                 );
+            })
+            .catch((error) => {
+                console.log(error);
             });
-        }, 1000 * 30);
-        return () => {
-            clearInterval(timerID);
-        };
     }, []);
 
-    const fetchData = async () => {
-        let data = { index: [], price: [], volumes: [] };
-        let result = await callAPI(
-            `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=1&interval=1m`
-        );
-        for (const item of result.prices) {
-            data.index.push(item[0]);
-            data.price.push(item[1]);
-        }
-        for (const item of result.total_volumes) data.volumes.push(item[1]);
-        return data;
-    };
+
 
     const initChart = (data) => {
         let trace_price = {
