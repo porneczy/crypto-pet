@@ -1,15 +1,14 @@
 import React from "react";
-import { AppBar, Toolbar, Typography, IconButton } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
+import { AppBar, Toolbar, Typography, IconButton } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
 
-const AppBarComp=({setOpen}) => {
-    
+const AppBarComp = ({ setOpen }) => {
     const handleDrawerOpen = () => {
         setOpen(true);
     };
 
     return (
-        <AppBar position="fixed" >
+        <AppBar position="fixed">
             <Toolbar>
                 <Typography variant="h6" noWrap sx={{ flexGrow: 1 }} component="div">
                     Coin Tracker
@@ -24,7 +23,7 @@ const AppBarComp=({setOpen}) => {
                 </IconButton>
             </Toolbar>
         </AppBar>
-    )
-}
+    );
+};
 
-export default AppBarComp
+export default AppBarComp;

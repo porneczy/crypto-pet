@@ -1,10 +1,8 @@
-import './App.css';
+import "./App.css";
 import Page from "./Page";
 
 function App() {
-  return (
-      <Page />
-  );
+  return <Page />;
 }
 
 export default App;

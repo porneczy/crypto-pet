@@ -6,11 +6,17 @@ import Coin from "./components/Coin";
 import AppBarComp from "./components/AppBarComp";
 import DrawerComp from "./components/DrawerComp";
 
-import { Table, TableBody, TableContainer, TableHead, TableRow, TableCell, Paper} from "@mui/material";
-
+import {
+    Table,
+    TableBody,
+    TableContainer,
+    TableHead,
+    TableRow,
+    TableCell,
+    Paper,
+} from "@mui/material";
 
 function Page() {
-
     const [coins, setCoins] = useState([]);
     const [open, setOpen] = useState(false);
     const [search, setSearch] = useState("");
@@ -29,34 +35,41 @@ function Page() {
     }, []);
 
     const filteredCoins = coins.filter((coin) =>
-        coin.name.toLowerCase().includes(typeof search === 'string' ? search.toLowerCase() : '')
+        coin.name
+            .toLowerCase()
+            .includes(typeof search === "string" ? search.toLowerCase() : "")
     );
 
-    console.log(coins)
     return (
         <div className="tracker_app">
-
             <AppBarComp setOpen={setOpen} />
 
-            <DrawerComp open={open} setOpen={setOpen} setSearch={setSearch} coins={coins} setCoins={setCoins} />
+            <DrawerComp
+                open={open}
+                setOpen={setOpen}
+                setSearch={setSearch}
+                coins={coins}
+                setCoins={setCoins}
+            />
 
-            <TableContainer component={Paper} sx={{
-                display: "flex",
-                justifyContent: "center",
-                marginTop: "100px"
-            }}>
+            <TableContainer
+                component={Paper}
+                sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    marginTop: "100px",
+                }}
+            >
                 <Table aria-label="collapsible table" sx={{ maxWidth: 1200 }}>
                     <TableHead>
-                        <TableRow >
+                        <TableRow>
                             <TableCell />
-                            <TableCell >Rank</TableCell>
-                            <TableCell >Name</TableCell>
-                            <TableCell >Symbol</TableCell>
-                            <TableCell >Current Price</TableCell>
-                            <TableCell >
-                                Change 24h
-                            </TableCell>
-                            <TableCell >Market Cap</TableCell>
+                            <TableCell>Rank</TableCell>
+                            <TableCell>Name</TableCell>
+                            <TableCell>Symbol</TableCell>
+                            <TableCell>Current Price</TableCell>
+                            <TableCell>Change 24h</TableCell>
+                            <TableCell>Market Cap</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -73,14 +86,13 @@ function Page() {
                                     marketCap={coin.market_cap}
                                     id={coin.id}
                                 />
-                            )
+                            );
                         })}
                     </TableBody>
                 </Table>
             </TableContainer>
-
         </div>
-    )
+    );
 }
 
-export default Page
+export default Page;

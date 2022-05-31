@@ -41,21 +41,21 @@ h2{
 /* .rank{
     width: 60px;
 } */
- .symbol{
-    text-transform: uppercase;
+.symbol {
+  text-transform: uppercase;
 }
 
 img {
-    height: 35px;
+  height: 35px;
 }
-.name{
-    margin-left: 20px;
+.name {
+  margin-left: 20px;
 }
 
 .red {
-    color: #f00606;
-  }
-  
-  .green {
-    color: #11d811;
-  }
+  color: #f00606;
+}
+
+.green {
+  color: #11d811;
+}

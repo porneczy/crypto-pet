@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import "./Coin.css";
 import Chart from "./Chart";
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { TableRow, TableCell, IconButton, Box, Collapse, Typography } from '@mui/material';
-
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import {
+    TableRow,
+    TableCell,
+    IconButton,
+    Box,
+    Collapse,
+    Typography,
+} from "@mui/material";
 
 function Coin({
     name,
@@ -14,12 +20,12 @@ function Coin({
     change24h,
     rank,
     marketCap,
-    id
+    id,
 }) {
     const [open, setOpen] = useState(false);
     return (
         <>
-            <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+            <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
                 <TableCell>
                     <IconButton
                         aria-label="expand row"
@@ -33,20 +39,21 @@ function Coin({
                 <TableCell component="th" scope="row">
                     {rank}
                 </TableCell>
-                <TableCell >
+                <TableCell>
                     <img src={image} alt="coin" />
-                    <b className='name'>{name}</b>
+                    <b className="name">{name}</b>
                 </TableCell>
-                <TableCell ><p className="symbol">{symbol}</p></TableCell>
-                <TableCell >{currentPrice} $</TableCell>
-                <TableCell >
+                <TableCell>
+                    <p className="symbol">{symbol}</p>
+                </TableCell>
+                <TableCell>{currentPrice} $</TableCell>
+                <TableCell>
                     <p className={`${change24h < 0 ? "red" : "green"}`}>
                         {change24h.toFixed(2)}%
                     </p>
                 </TableCell>
 
-                <TableCell >{marketCap.toLocaleString()} $</TableCell>
-
+                <TableCell>{marketCap.toLocaleString()} $</TableCell>
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -56,17 +63,13 @@ function Coin({
                                 Chart
                             </Typography>
 
-
                             <Chart id={id} />
-                            
-
-                            
                         </Box>
                     </Collapse>
                 </TableCell>
             </TableRow>
         </>
-    )
+    );
 }
 
-export default Coin
+export default Coin;
