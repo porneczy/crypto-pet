@@ -16,24 +16,45 @@ function Chart({ id }) {
             .then((response) => {
                 let dataa = { index: [], price: [], volumes: [] };
 
-
                 for (const item of response.data.prices) {
                     dataa.index.push(item[0]);
                     dataa.price.push(item[1]);
                 }
                 for (const item of response.data.total_volumes) dataa.volumes.push(item[1]);
 
+                setTimeout(() => {
+                    setIsLoading(false)
+                }, "1000")
+                setTimeout(() => {
+                    initChart(dataa)
+                }, "1100")
 
-
-                setIsLoading(false);
-                initChart(dataa);
                 setLatestPrice(
                     parseFloat(dataa.price[dataa.price.length - 1]).toFixed(2)
                 );
             })
-            .catch((error) => {
-                console.log(error);
-            });
+        const timerID = setInterval(() => {
+            axios
+                .get(
+                    `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=1&interval=1m`
+                ).then((response) => {
+                    let dataa = { index: [], price: [], volumes: [] };
+
+                    for (const item of response.data.prices) {
+                        dataa.index.push(item[0]);
+                        dataa.price.push(item[1]);
+                    }
+                    for (const item of response.data.total_volumes) dataa.volumes.push(item[1]);
+
+                    updateChart(dataa);
+                    setLatestPrice(
+                        parseFloat(dataa.price[dataa.price.length - 1]).toFixed(2)
+                    );
+                });
+        }, 1000 * 30);
+        return () => {
+            clearInterval(timerID);
+        };
     }, []);
 
 
@@ -91,7 +112,7 @@ function Chart({ id }) {
         };
         let config = { responsive: true };
         let series = [trace_price, trace_volumes];
-        Plotly.newPlot("chart", series, layout, config);
+        Plotly.newPlot(`chart${id}`, series, layout, config);
     };
 
     const updateChart = (data) => {
@@ -105,8 +126,8 @@ function Chart({ id }) {
             y: [data.volumes],
         };
 
-        Plotly.update("chart", trace_price, {}, 0);
-        Plotly.update("chart", trace_volumes, {}, 1);
+        Plotly.update(`chart${id}`, trace_price, {}, 0);
+        Plotly.update(`chart${id}`, trace_volumes, {}, 1);
         document.querySelector(`#${id}`).classList.add("animate__fadeIn");
     };
 
@@ -122,7 +143,7 @@ function Chart({ id }) {
                     <h2 id={id} className="text-center text-primary animate__animated">
                         $ {latestPrice}
                     </h2>
-                    <div id="chart" className="p-0 m-0"></div>
+                    <div id={`chart${id}`} className="p-0 m-0"></div>
                 </>
             )}
         </div>
