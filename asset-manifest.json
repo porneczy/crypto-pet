@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/crypto-pet/static/css/main.6d87ddbe.css",
+    "main.js": "/crypto-pet/static/js/main.91345764.js",
+    "static/js/787.1b2e8f1c.chunk.js": "/crypto-pet/static/js/787.1b2e8f1c.chunk.js",
+    "index.html": "/crypto-pet/index.html",
+    "main.6d87ddbe.css.map": "/crypto-pet/static/css/main.6d87ddbe.css.map",
+    "main.91345764.js.map": "/crypto-pet/static/js/main.91345764.js.map",
+    "787.1b2e8f1c.chunk.js.map": "/crypto-pet/static/js/787.1b2e8f1c.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6d87ddbe.css",
+    "static/js/main.91345764.js"
+  ]
+}
