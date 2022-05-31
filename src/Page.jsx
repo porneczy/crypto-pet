@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
-
 import axios from "axios";
-
 import Coin from "./components/Coin";
 import AppBarComp from "./components/AppBarComp";
 import DrawerComp from "./components/DrawerComp";
-
 import {
     Table,
     TableBody,
