@@ -1,10 +1,10 @@
 import React from "react";
-import { AppBar, Toolbar, Typography, IconButton } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
+import { AppBar, Toolbar, Typography, Autocomplete, TextField } from "@mui/material";
 
-const AppBarComp = ({ setOpen }) => {
-    const handleDrawerOpen = () => {
-        setOpen(true);
+const AppBarComp = ({ setSearch, coins }) => {
+
+    const changeHandler = (value) => {
+        setSearch(value);
     };
 
     return (
@@ -13,14 +13,22 @@ const AppBarComp = ({ setOpen }) => {
                 <Typography variant="h6" noWrap sx={{ flexGrow: 1 }} component="div">
                     Coin Tracker
                 </Typography>
-                <IconButton
-                    color="inherit"
-                    aria-label="open drawer"
-                    edge="end"
-                    onClick={handleDrawerOpen}
-                >
-                    <MenuIcon />
-                </IconButton>
+
+                <Autocomplete
+                    sx={{ width: 400, backgroundColor: "#2196f3" }}
+                    id="outlined-basic"
+                    options={coins.map((coin) => coin.name)}
+                    onChange={(event, value) => changeHandler(value)}
+                    isOptionEqualToValue={(option, value) => option.value === value.value}
+                    renderInput={(params) => (
+                        <TextField
+                            onChange={(e) => changeHandler(e.target.value)}
+                            {...params}
+                            placeholder="Search…"
+                        />
+                    )}
+                />
+
             </Toolbar>
         </AppBar>
     );

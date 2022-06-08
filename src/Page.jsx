@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Coin from "./components/Coin";
 import AppBarComp from "./components/AppBarComp";
-import DrawerComp from "./components/DrawerComp";
 
 import {
     Table,
@@ -12,13 +11,13 @@ import {
     TableRow,
     TableCell,
     Paper,
-    Box,
+    Button
 } from "@mui/material";
 
 function Page() {
     const [coins, setCoins] = useState([]);
-    const [open, setOpen] = useState(false);
     const [search, setSearch] = useState("");
+    const [sort, setSort] = useState("desc");
 
     useEffect(() => {
         axios
@@ -39,17 +38,22 @@ function Page() {
             .includes(typeof search === "string" ? search.toLowerCase() : "")
     );
 
+
+    function sortCoins(sortProperty) {
+        setCoins([
+            ...coins.sort((a, b) =>
+                sort === "desc"
+                    ? b[sortProperty] - a[sortProperty]
+                    : a[sortProperty] - b[sortProperty]
+            ),
+        ]);
+        setSort(sort === "desc" ? "asc" : "desc");
+    }
+
     return (
         <div className="tracker_app">
-            <AppBarComp setOpen={setOpen} />
+            <AppBarComp setSearch={setSearch} coins={coins} />
 
-            <DrawerComp
-                open={open}
-                setOpen={setOpen}
-                setSearch={setSearch}
-                coins={coins}
-                setCoins={setCoins}
-            />
 
             <TableContainer
                 component={Paper}
@@ -66,9 +70,33 @@ function Page() {
                             <TableCell>Rank</TableCell>
                             <TableCell>Name</TableCell>
                             <TableCell>Symbol</TableCell>
-                            <TableCell>Current Price</TableCell>
-                            <TableCell>Change 24h</TableCell>
-                            <TableCell>Market Cap</TableCell>
+                            <TableCell>
+                                <Button
+                                    variant="text"
+                                    value="current_price"
+                                    onClick={(e) => sortCoins(e.target.value)}
+                                >
+                                    Current Price</Button>
+                            </TableCell>
+                            <TableCell>
+                                <Button
+                                    variant="text"
+                                    value="price_change_percentage_24h"
+                                    onClick={(e) => sortCoins(e.target.value)}
+                                >
+                                    Change 24h</Button>
+                            </TableCell>
+                            <TableCell>
+                                <Button
+                                    variant="text"
+                                    value="market_cap"
+                                    onClick={(e) => sortCoins(e.target.value)}
+                                >
+                                    Marcet Cap</Button>
+                            </TableCell>
+                            <TableCell>
+                                <Button variant="contained">Watch List</Button>
+                            </TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>

@@ -3,6 +3,7 @@ import "./Coin.css";
 import Chart from "./Chart";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import StarBorderIcon from '@mui/icons-material/StarBorder';
 import {
     TableRow,
     TableCell,
@@ -54,6 +55,9 @@ function Coin({
                 </TableCell>
 
                 <TableCell>{marketCap.toLocaleString()} $</TableCell>
+                <TableCell>
+                    <StarBorderIcon />
+                </TableCell>
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0, border: 0 }} colSpan={6}>
