@@ -32,7 +32,17 @@ function Page() {
             .catch((error) => {
                 console.log(error);
             });
+
+        const coinFavourites = JSON.parse(
+            localStorage.getItem('react-coin-app-favourites')
+        );
+        coinFavourites ? setFavourites(coinFavourites) : setFavourites([]);
     }, []);
+
+
+    const saveToLocalStorage = (items) => {
+        localStorage.setItem('react-coin-app-favourites', JSON.stringify(items));
+    };
 
     const filteredCoins = coins.filter((coin) =>
         coin.name
@@ -51,6 +61,7 @@ function Page() {
         })
 
         setFavourites(newFavouriteList2);
+        saveToLocalStorage(newFavouriteList2)
     };
 
     function sortCoins(sortProperty) {
