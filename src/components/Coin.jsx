@@ -4,6 +4,7 @@ import Chart from "./Chart";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import StarBorderIcon from '@mui/icons-material/StarBorder';
+import StarIcon from '@mui/icons-material/Star';
 import {
     TableRow,
     TableCell,
@@ -14,6 +15,7 @@ import {
 } from "@mui/material";
 
 function Coin({
+    coin,
     name,
     image,
     symbol,
@@ -22,8 +24,11 @@ function Coin({
     rank,
     marketCap,
     id,
+    handleFavouritesClick,
+    favourites
 }) {
     const [open, setOpen] = useState(false);
+
     return (
         <>
             <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -56,7 +61,14 @@ function Coin({
 
                 <TableCell>{marketCap.toLocaleString()} $</TableCell>
                 <TableCell>
-                    <StarBorderIcon />
+                    <IconButton
+                        aria-label="expand row"
+                        size="small"
+                        onClick={() => handleFavouritesClick(coin)}
+                    >
+                        {favourites.findIndex(favourite => favourite.id === id) >= 0 ? <StarIcon /> : <StarBorderIcon />}
+                    </IconButton>
+
                 </TableCell>
             </TableRow>
             <TableRow>

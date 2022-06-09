@@ -11,13 +11,15 @@ import {
     TableRow,
     TableCell,
     Paper,
-    Button
+    Button,
+    setRef
 } from "@mui/material";
 
 function Page() {
     const [coins, setCoins] = useState([]);
     const [search, setSearch] = useState("");
     const [sort, setSort] = useState("desc");
+    const [favourites, setFavourites] = useState([]);
 
     useEffect(() => {
         axios
@@ -38,6 +40,18 @@ function Page() {
             .includes(typeof search === "string" ? search.toLowerCase() : "")
     );
 
+    const addFavouriteCoin = (coin) => {
+
+        let newFavouriteList = []
+
+        favourites.find(favourite => favourite.id === coin.id) ? newFavouriteList = [...favourites.filter(favourite => favourite.id !== coin.id)] : newFavouriteList = [...favourites, coin]
+
+        let newFavouriteList2 = newFavouriteList.filter((c, index) => {
+            return newFavouriteList.indexOf(c) === index
+        })
+
+        setFavourites(newFavouriteList2);
+    };
 
     function sortCoins(sortProperty) {
         setCoins([
@@ -49,6 +63,7 @@ function Page() {
         ]);
         setSort(sort === "desc" ? "asc" : "desc");
     }
+
 
     return (
         <div className="tracker_app">
@@ -95,7 +110,11 @@ function Page() {
                                     Marcet Cap</Button>
                             </TableCell>
                             <TableCell>
-                                <Button variant="contained">Watch List</Button>
+                                <Button
+                                    variant="contained"
+                                    onClick={() => setCoins(favourites)}
+                                >
+                                    Watch List</Button>
                             </TableCell>
                         </TableRow>
                     </TableHead>
@@ -106,6 +125,7 @@ function Page() {
                                 filteredCoins.map((coin) => {
                                     return (
                                         <Coin
+                                            coin={coin}
                                             key={coin.id}
                                             name={coin.name}
                                             image={coin.image}
@@ -115,6 +135,8 @@ function Page() {
                                             rank={coin.market_cap_rank}
                                             marketCap={coin.market_cap}
                                             id={coin.id}
+                                            handleFavouritesClick={addFavouriteCoin}
+                                            favourites={favourites}
                                         />
                                     );
                                 })
