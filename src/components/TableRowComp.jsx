@@ -29,7 +29,14 @@ function TableRowComp({
     return (
         <><TableRow>
             <TableCell />
-            <TableCell>Rank</TableCell>
+            <TableCell>
+                <Button
+                    variant="text"
+                    value="market_cap_rank"
+                    onClick={(e) => sortCoins(e.target.value)}
+                >
+                    Rank</Button>
+            </TableCell>
             <TableCell>Name</TableCell>
             <TableCell>Symbol</TableCell>
             <TableCell>
