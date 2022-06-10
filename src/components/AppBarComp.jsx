@@ -1,17 +1,24 @@
 import React from "react";
-import { AppBar, Toolbar, Typography, Autocomplete, TextField } from "@mui/material";
+import { AppBar, Toolbar, Typography, Autocomplete, TextField, Button } from "@mui/material";
+
 
 const AppBarComp = ({ setSearch, coins }) => {
+
+
 
     const changeHandler = (value) => {
         setSearch(value);
     };
 
+    function refreshPage() {
+        window.location.reload(false);
+    }
+
     return (
         <AppBar position="fixed">
             <Toolbar>
-                <Typography variant="h6" noWrap sx={{ flexGrow: 1 }} component="div">
-                    Coin Tracker
+                <Typography variant="h6" noWrap sx={{ flexGrow: 1 }} component="div" >
+                    <Button color="inherit" size="large" onClick={refreshPage}>Coin Tracker</Button>
                 </Typography>
 
                 <Autocomplete

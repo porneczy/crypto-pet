@@ -11,12 +11,12 @@ import {
     TableRow,
     TableCell,
     Paper,
-    Button,
-    setRef
+    Button
 } from "@mui/material";
 
 function Page() {
     const [coins, setCoins] = useState([]);
+    const [coinsBackup, setCoinsBackup] = useState([])
     const [search, setSearch] = useState("");
     const [sort, setSort] = useState("desc");
     const [favourites, setFavourites] = useState([]);
@@ -28,6 +28,7 @@ function Page() {
             )
             .then((response) => {
                 setCoins(response.data);
+                setCoinsBackup(response.data);
             })
             .catch((error) => {
                 console.log(error);
@@ -38,6 +39,7 @@ function Page() {
         );
         coinFavourites ? setFavourites(coinFavourites) : setFavourites([]);
     }, []);
+
 
 
     const saveToLocalStorage = (items) => {
@@ -123,7 +125,8 @@ function Page() {
                             <TableCell>
                                 <Button
                                     variant="contained"
-                                    onClick={() => setCoins(favourites)}
+                                    /* onClick={() => setCoins(favourites)} */
+                                    onClick={() => coins === favourites ? setCoins(coinsBackup) : setCoins(favourites)}
                                 >
                                     Watch List</Button>
                             </TableCell>
