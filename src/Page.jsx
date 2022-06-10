@@ -20,6 +20,11 @@ function Page() {
     const [search, setSearch] = useState("");
     const [sort, setSort] = useState("desc");
     const [favourites, setFavourites] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    setTimeout(() => {
+        setIsLoading(false)
+    }, "2000")
 
     useEffect(() => {
         axios
@@ -39,8 +44,6 @@ function Page() {
         );
         coinFavourites ? setFavourites(coinFavourites) : setFavourites([]);
     }, []);
-
-
 
     const saveToLocalStorage = (items) => {
         localStorage.setItem('react-coin-app-favourites', JSON.stringify(items));
@@ -151,6 +154,7 @@ function Page() {
                                             id={coin.id}
                                             handleFavouritesClick={addFavouriteCoin}
                                             favourites={favourites}
+                                            isLoading={isLoading}
                                         />
                                     );
                                 })

@@ -26,14 +26,11 @@ function Coin({
     marketCap,
     id,
     handleFavouritesClick,
-    favourites
+    favourites,
+    isLoading
 }) {
     const [open, setOpen] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
 
-    setTimeout(() => {
-        setIsLoading(false)
-    }, "2000")
 
     return (
         <>
