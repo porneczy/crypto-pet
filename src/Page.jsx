@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Coin from "./components/Coin";
 import AppBarComp from "./components/AppBarComp";
+import TableRowComp from "./components/TableRowComp";
+import TableBodyComp from "./components/TableBodyComp";
 
 import {
     Table,
-    TableBody,
     TableContainer,
     TableHead,
-    TableRow,
-    TableCell,
     Paper,
-    Button
 } from "@mui/material";
 
 function Page() {
@@ -45,46 +42,9 @@ function Page() {
         coinFavourites ? setFavourites(coinFavourites) : setFavourites([]);
     }, []);
 
-    const saveToLocalStorage = (items) => {
-        localStorage.setItem('react-coin-app-favourites', JSON.stringify(items));
-    };
-
-    const filteredCoins = coins.filter((coin) =>
-        coin.name
-            .toLowerCase()
-            .includes(typeof search === "string" ? search.toLowerCase() : "")
-    );
-
-    const addFavouriteCoin = (coin) => {
-
-        let newFavouriteList = []
-
-        favourites.find(favourite => favourite.id === coin.id) ? newFavouriteList = [...favourites.filter(favourite => favourite.id !== coin.id)] : newFavouriteList = [...favourites, coin]
-
-        let newFavouriteList2 = newFavouriteList.filter((c, index) => {
-            return newFavouriteList.indexOf(c) === index
-        })
-
-        setFavourites(newFavouriteList2);
-        saveToLocalStorage(newFavouriteList2)
-    };
-
-    function sortCoins(sortProperty) {
-        setCoins([
-            ...coins.sort((a, b) =>
-                sort === "desc"
-                    ? b[sortProperty] - a[sortProperty]
-                    : a[sortProperty] - b[sortProperty]
-            ),
-        ]);
-        setSort(sort === "desc" ? "asc" : "desc");
-    }
-
-
     return (
         <div className="tracker_app">
             <AppBarComp setSearch={setSearch} coins={coins} />
-
 
             <TableContainer
                 component={Paper}
@@ -96,73 +56,26 @@ function Page() {
             >
                 <Table aria-label="collapsible table" sx={{ maxWidth: 1200 }}>
                     <TableHead>
-                        <TableRow>
-                            <TableCell />
-                            <TableCell>Rank</TableCell>
-                            <TableCell>Name</TableCell>
-                            <TableCell>Symbol</TableCell>
-                            <TableCell>
-                                <Button
-                                    variant="text"
-                                    value="current_price"
-                                    onClick={(e) => sortCoins(e.target.value)}
-                                >
-                                    Current Price</Button>
-                            </TableCell>
-                            <TableCell>
-                                <Button
-                                    variant="text"
-                                    value="price_change_percentage_24h"
-                                    onClick={(e) => sortCoins(e.target.value)}
-                                >
-                                    Change 24h</Button>
-                            </TableCell>
-                            <TableCell>
-                                <Button
-                                    variant="text"
-                                    value="market_cap"
-                                    onClick={(e) => sortCoins(e.target.value)}
-                                >
-                                    Marcet Cap</Button>
-                            </TableCell>
-                            <TableCell>
-                                <Button
-                                    variant="contained"
-                                    /* onClick={() => setCoins(favourites)} */
-                                    onClick={() => coins === favourites ? setCoins(coinsBackup) : setCoins(favourites)}
-                                >
-                                    Watch List</Button>
-                            </TableCell>
-                        </TableRow>
+
+                        <TableRowComp
+                            setCoins={setCoins}
+                            coins={coins}
+                            sort={sort}
+                            setSort={setSort}
+                            favourites={favourites}
+                            coinsBackup={coinsBackup}
+                        />
+
                     </TableHead>
-                    <TableBody>
 
-                        {
-                            filteredCoins.length ?
-                                filteredCoins.map((coin) => {
-                                    return (
-                                        <Coin
-                                            coin={coin}
-                                            key={coin.id}
-                                            name={coin.name}
-                                            image={coin.image}
-                                            symbol={coin.symbol}
-                                            currentPrice={coin.current_price}
-                                            change24h={coin.price_change_percentage_24h}
-                                            rank={coin.market_cap_rank}
-                                            marketCap={coin.market_cap}
-                                            id={coin.id}
-                                            handleFavouritesClick={addFavouriteCoin}
-                                            favourites={favourites}
-                                            isLoading={isLoading}
-                                        />
-                                    );
-                                })
-                                :
-                                <img className="noResult" src="https://i.pinimg.com/originals/6f/95/d2/6f95d238b4251ac47ed830cea546aaf5.png" alt="no-results" />
-                        }
+                    <TableBodyComp
+                        coins={coins}
+                        search={search}
+                        favourites={favourites}
+                        setFavourites={setFavourites}
+                        isLoading={isLoading}
+                    />
 
-                    </TableBody>
                 </Table>
             </TableContainer>
         </div>
