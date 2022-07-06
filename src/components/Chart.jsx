@@ -85,6 +85,7 @@ function Chart({ id }) {
         };
         let layout = {
             autosize: true,
+            dragmode: "select",
             height: "100%",
             margin: {
                 l: 50,
