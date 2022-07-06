@@ -42,3 +42,15 @@
   width: 600px;
   height: auto;
 }
+
+@media only screen and (max-width: 850px) {
+  .css-12wf30f-MuiPaper-root-MuiTableContainer-root {
+    display: flex;
+    justify-content: right;
+    flex-direction: column;
+  }
+
+  .css-1ndj1i-MuiAutocomplete-root {
+    max-width: 150px;
+  }
+}
